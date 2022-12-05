@@ -1,0 +1,21 @@
+﻿<Window x:Class="Inspector_Gadget.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inspector_Gadget"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Name="tbx_input" TextWrapping="Wrap"></TextBox>
+            <Button Grid.Row="1" HorizontalAlignment="Right" Width="100" Name="btn_submit" Content="Submit" Margin="0,5,10,5" Click="btn_submit_Click"></Button>
+            <TextBox Grid.Row="2" Name="tbx_output" TextWrapping="Wrap"></TextBox>
+        </Grid>
+    </Grid>
+</Window>
