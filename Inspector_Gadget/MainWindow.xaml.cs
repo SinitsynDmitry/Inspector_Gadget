@@ -50,5 +50,28 @@ namespace Inspector_Gadget
                 throw;
             }
         }
+
+        private async void btn_keywords_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tbx_input.Text))
+                {
+                    tbx_keywords.Text = "";
+
+                    var api = new OpenAIAPI("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");
+
+                    var task = await api.Completions.CreateCompletionAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text, temperature: 0.5, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0));
+                  
+                    tbx_keywords.Text += task.Completions[0].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
     }
 }
