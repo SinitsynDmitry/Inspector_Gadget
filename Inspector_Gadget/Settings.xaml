@@ -1,0 +1,73 @@
+﻿<Window x:Class="Inspector_Gadget.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inspector_Gadget"
+        mc:Ignorable="d"
+        Title="Settings" Height="450" Width="400" Foreground="White">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FF0A172B" />
+            <GradientStop Offset="1" Color="#FF264289" />
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid  Background="{StaticResource paneBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox x:Name="gbWhisperSettings" Grid.Row="0" Header="Whisper">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbLanguages" Text="Languages" Grid.Row="0" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
+                <ComboBox x:Name="cmbLanguages" HorizontalAlignment="Left" Grid.Row="0" Grid.Column ="1" VerticalAlignment="Center" Width="120"/>
+                <TextBlock x:Name="tbModels" Text="Models" Grid.Row="1" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
+                <ComboBox x:Name="cmbBoxModels" HorizontalAlignment="Left" Grid.Row="1"  Grid.Column ="1" VerticalAlignment="Center" Width="120"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="gbTLDRSettings" Grid.Row="1" Header="TLDR">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbtemperature" Text="Temperature" Grid.Row="0" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
+                <TextBox x:Name="cmbTemperature" HorizontalAlignment="Left" Grid.Row="0" Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="0.7"/>
+                <TextBlock x:Name="tbtemperatureД" Text="Value from 0 to 1" Grid.Row="0" Grid.Column ="2" VerticalAlignment="Center" Width="120" Margin="5,0"/>
+                
+                <TextBlock x:Name="tbTokens" Text="Tokens" Grid.Row="1" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
+                <TextBox x:Name="cmbTokens" HorizontalAlignment="Left" Grid.Row="1"  Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="60"/>
+                <TextBlock x:Name="tbTokensL" Text="Value from 0 to 2048" Grid.Row="1" Grid.Column ="3" VerticalAlignment="Center" Width="120"  Margin="5,0"/>
+
+                <TextBlock x:Name="tbtop" Text="Top_p" Grid.Row="2" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
+                <TextBox x:Name="tbTop" HorizontalAlignment="Left" Grid.Row="2" Grid.Column ="1" VerticalAlignment="Center" Width="30" Text="1.0"/>
+                <TextBlock x:Name="tbtopL" Text="Value from 0 to 1" Grid.Row="2" Grid.Column ="3" VerticalAlignment="Center" Width="120" Margin="5,0"/>
+                
+                <TextBlock x:Name="tbfrequencyPenalty" Text="Frequency penalty" Grid.Row="3" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
+                <TextBox x:Name="txfrequencyPenalty" HorizontalAlignment="Left" Grid.Row="3"  Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="0.0"/>
+                <TextBlock x:Name="tbfrequencyPenaltyL" Text="Value from -2.0 to 2.0" Grid.Row="3" Grid.Column ="3" VerticalAlignment="Center" Width="120"  Margin="5,0"/>
+                
+                <TextBlock x:Name="tblpresencePenalty" Text="Presence penalty" Grid.Row="4" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
+                <TextBox x:Name="tbpresencePenalty" HorizontalAlignment="Left" Grid.Row="4" Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="1.0"/>
+                <TextBlock x:Name="tblpresencePenaltyL" Text="Value from -2.0 to 2.0" Grid.Row="4" Grid.Column ="3" VerticalAlignment="Center" Width="120" Margin="5,0"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
