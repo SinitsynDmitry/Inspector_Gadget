@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inspector_Gadget"
-        xmlns:ctrl="clr-namespace:Inspector_Gadget.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="800">
-    <Grid>
+        Title="Inspector Gadget" Height="650" Width="800">
+    <Window.Resources>
+    <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FF0A172B" />
+        <GradientStop Offset="1" Color="#FF264289" />
+    </LinearGradientBrush>
+    </Window.Resources>
+    <Grid  Background="{StaticResource paneBackground}">
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
