@@ -65,6 +65,9 @@ namespace Inspector_Gadget
             }
         }
 
+        private void btnSelectFolder_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

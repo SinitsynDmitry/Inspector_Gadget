@@ -1,4 +1,5 @@
-﻿using OpenAI_API;
+﻿using Microsoft.Win32;
+using OpenAI_API;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,6 +91,17 @@ namespace Inspector_Gadget
                 }
             }
             catch (Exception ex) { throw ex; }
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                if (openFileDialog.ShowDialog().ToString() == "OK")
+                    tbInfo.Text = openFileDialog.FileName;
+            }
+            catch(Exception ex) { throw ex; }
         }
     }
 }
