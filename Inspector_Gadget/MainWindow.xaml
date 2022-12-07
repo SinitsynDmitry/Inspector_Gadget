@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inspector_Gadget"
         mc:Ignorable="d"
-        Title="Inspector Gadget" Height="650" Width="800">
+        Title="Inspector Gadget" Height="650" Width="800" Foreground="White">
     <Window.Resources>
     <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
         <GradientStop Offset="0" Color="#FF0A172B" />
