@@ -1,6 +1,7 @@
 ﻿using OpenAI_API;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,5 +76,20 @@ namespace Inspector_Gadget
             }
         }
 
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Settings settings = new Settings();
+                settings.Owner = Window.GetWindow(this);
+
+
+                if (settings.ShowDialog() == true)
+                {
+                    
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
     }
 }
