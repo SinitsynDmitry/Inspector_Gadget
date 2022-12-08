@@ -1,4 +1,7 @@
+using Inspector_Gadget_Maui.Controls;
+
 namespace Inspector_Gadget_Maui;
+
 
 public partial class SelectFilePage : ContentPage
 {
@@ -40,6 +43,14 @@ public partial class SelectFilePage : ContentPage
             if (result != null)
             {
                 entFilePath.Text = result.FullPath;
+            }
+
+            if (!string.IsNullOrWhiteSpace(result.FullPath))
+            {
+                video.Source = new FileVideoSource
+                {
+                    File = result.FullPath
+                };
             }
         }
         catch (Exception ex) { throw ex; }
