@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace Inspector_Gadget_Maui
 {
-    internal class PhraseObj
+
+    public class PhraseObj
     {
+
+        public TimeSpan StartPosition
+        {
+            get; set;
+        }
+
+        public TimeSpan StopPosition
+        {
+            get; set;
+        }
+
+        public string Text
+        {
+            get; set;
+        }
     }
 }
