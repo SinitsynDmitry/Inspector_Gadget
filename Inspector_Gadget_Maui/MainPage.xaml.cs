@@ -48,6 +48,15 @@ namespace Inspector_Gadget_Maui
             catch (Exception ex) { throw ex; }
         }
 
+        private async void btnSelectFilePage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushAsync(new SelectFilePage());
+            }
+            catch(Exception ex) { throw ex; }
+        }
+
         private async void btn_submit_Click(object sender, EventArgs e)
         {
             try
