@@ -47,7 +47,7 @@
                     <Button x:Name="btnBrowse"  Grid.Row="0" Text="Select file" Clicked="btnBrowse_Click" Margin="5,5"/>
                     <Label x:Name="tbInfo" Grid.Row="1"/>
                     <Button x:Name="btnStart"  Grid.Row="2" Text="Start" Clicked="btnStart_Clicked" Margin="5,5"/>
-                    <Editor Grid.Row="2" x:Name="tbx_whisper"  Margin="5,0,0,0"/>
+                    <Editor Grid.Row="3" x:Name="tbx_whisper"  Margin="5,0,0,0"/>
                 </Grid>
             </VerticalStackLayout>
         </Grid>
