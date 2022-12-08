@@ -141,7 +141,7 @@ namespace Inspector_Gadget_Maui
                    // { DevicePlatform.Android, new[] { "application/comics" } }, // MIME type
                     { DevicePlatform.WinUI, new[] { ".mp3", ".mp4" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
-                    { DevicePlatform.MacCatalyst, new[] { "mp3", "mp4" } }, // UTType values
+                    { DevicePlatform.MacCatalyst, new[] { "public.video", "public.audio" } }, // UTType values
                 });
 
                 PickOptions options = new()
