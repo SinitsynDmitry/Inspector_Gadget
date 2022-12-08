@@ -34,7 +34,7 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Entry Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" x:Name="entFilePath" Placeholder="Filepath" PlaceholderColor="DarkGray" Keyboard="Url" IsSpellCheckEnabled="False" Background="lightgray"/>
+            <Entry Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" x:Name="entFilePath" IsReadOnly="True" Placeholder="Filepath" PlaceholderColor="DarkGray" Keyboard="Url" IsSpellCheckEnabled="False" Background="lightgray"/>
             
             <Button Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnSelectFile" Text="Select file" Clicked="BtnSelectFile_Clicked" HorizontalOptions="Fill" />
 
