@@ -175,7 +175,7 @@ public partial class TranscriptionPage : ContentPage
 
                     await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text, temperature: 0.5, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
                     {
-                        tbx_keywords.Text += token.ToString();
+                        tbx_keywords.Text += token.ToString();                       
                     }
 
                 }
