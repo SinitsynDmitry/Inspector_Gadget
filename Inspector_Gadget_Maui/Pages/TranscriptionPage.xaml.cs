@@ -17,14 +17,21 @@ public partial class TranscriptionPage : ContentPage
     private string filePath = "";
 
     public TranscriptionPage(string filePath)
-	{
-		try
-		{
-			InitializeComponent();
+    {
+        try
+        {
+            InitializeComponent();
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                this.filePath = filePath.Trim();
 
-           this.filePath= filePath.Trim();
+                StartWhisper(filePath);
+            }
+            else
+            {
+                btnProcessText.IsEnabled = true;
+            }
 
-            StartWhisper(filePath);
         }
         catch (Exception ex) { throw ex; }
     }
@@ -114,7 +121,7 @@ public partial class TranscriptionPage : ContentPage
 
     private void Whisper_Exited(object sender, EventArgs e)
     {
-        try 
+        try
         {
             Application.Current.Dispatcher.Dispatch(() =>
             {
@@ -131,7 +138,7 @@ public partial class TranscriptionPage : ContentPage
                 }
 
             });
-           
+
         }
         catch (Exception ex)
         {
@@ -139,78 +146,87 @@ public partial class TranscriptionPage : ContentPage
         }
     }
 
+
+    private readonly object balanceLock = new object();
     private async void BtnProcessText_Clicked(object sender, EventArgs e)
     {
-		try
-		{
+        try
+        {
+            var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
+
             //tldr
 
-            try
+
+            if (!string.IsNullOrEmpty(tbx_input.Text))
             {
-                if (!string.IsNullOrEmpty(tbx_input.Text))
+                tbx_output.Text = "";
+
+                //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
+
+                await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(tbx_input.Text + " tl;dr:", temperature: 0.7, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 1)))
                 {
-                    tbx_output.Text = "";
-
-                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
-                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(tbx_input.Text + " tl;dr:", temperature: 0.7, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 1)))
-                    {
-                        tbx_output.Text += token.ToString();
-                    }
+                    tbx_output.Text += token.ToString();
                 }
-            }
-            catch (Exception ex)
-            {
-                //empty catch
-            }
 
-            //keywords
-            try
-            {
-                if (!string.IsNullOrEmpty(tbx_input.Text))
+
+
+
+                //keywords
+
+
+                tbx_keywords.Text = "";
+
+                //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
+
+                await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text, temperature: 0.5, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
                 {
-                    tbx_keywords.Text = "";
-
-                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
-                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text, temperature: 0.5, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
-                    {
-                        tbx_keywords.Text += token.ToString();                       
-                    }
-
+                    tbx_keywords.Text += token.ToString();
                 }
-            }
-            catch (Exception ex)
-            {
 
-               //empty catch
-            }
 
-            //esbr
-            try
-            {
-                if (!string.IsNullOrEmpty(tbx_input.Text))
+                //esbr
+
+                tbx_esrb.Text = "";
+
+                string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+                var stop = new string[1] { "\n" };
+
+                for (int i = 0; i < 10; i++)
                 {
-                    tbx_esrb.Text = "";
+                    string line = "";
+                    var multip = lines.Length / 10;
+                    var position = i * multip;
+                    var positionEnd = (i + 1) * multip;
+                    var prefix = $"{position}-{positionEnd}: ";
 
-                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
-                    var stop = new string[1] { "\n" };
-
-                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + tbx_input.Text + "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0, stopSequences: stop)))
+                    for (int j = position; j < positionEnd && j < lines.Length; j++)
                     {
-                        tbx_esrb.Text += token.ToString();
+                        line += lines[j];
+                    }
+                    lock (balanceLock)
+                    {
+                        tbx_esrb.Text += prefix;
                     }
 
-                }
-            }
-            catch (Exception ex)
-            {
+                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + line + "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0, stopSequences: stop)))
+                    {
+                        lock (balanceLock)
+                        {
+                            tbx_esrb.Text += $"{token.ToString()}";
+                        }
+                    }
 
-                //empty catch
+                    lock (balanceLock)
+                    {
+                        tbx_esrb.Text += Environment.NewLine;
+                    }
+                }
+
             }
+
         }
-		catch(Exception ex) { throw ex; }
+        catch (Exception ex) { throw ex; }
     }
 
     private void btnSearch_Clicked(object sender, EventArgs e)
@@ -218,7 +234,7 @@ public partial class TranscriptionPage : ContentPage
 
         try
         {
-            
+
 
         }
         catch (Exception ex)

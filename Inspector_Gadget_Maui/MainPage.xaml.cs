@@ -1,7 +1,9 @@
 ﻿
+using Microsoft.Maui.Controls.Shapes;
 using OpenAI_API;
 using System.Diagnostics;
 using System.Security.AccessControl;
+using Path = System.IO.Path;
 
 namespace Inspector_Gadget_Maui
 {
@@ -12,7 +14,7 @@ namespace Inspector_Gadget_Maui
         private static string whisperModel = whisperModels.tiny.ToString();
         private static long irCmdFileNameCounter = 0;
 
-        private Process whisper =null;
+        private Process whisper = null;
 
         public MainPage()
         {
@@ -53,10 +55,10 @@ namespace Inspector_Gadget_Maui
         {
             try
             {
-                
+
                 await Navigation.PushAsync(new SelectFilePage());
             }
-            catch(Exception ex) { throw ex; }
+            catch (Exception ex) { throw ex; }
         }
 
         private async void btn_submit_Click(object sender, EventArgs e)
@@ -106,6 +108,8 @@ namespace Inspector_Gadget_Maui
             }
         }
 
+        private readonly object balanceLock = new object();
+
         private async void btn_esrb_Clicked(object sender, EventArgs e)
         {
             try
@@ -116,11 +120,39 @@ namespace Inspector_Gadget_Maui
 
                     var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
 
+                    string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
                     var stop = new string[1] { "\n" };
 
-                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + tbx_input.Text+ "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0,stopSequences: stop)))
+                    for (int i = 0; i < 10; i++)
                     {
-                        tbx_esrb.Text += token.ToString();
+                        string line = "";
+                        var multip = lines.Length / 10;
+                        var position = i * multip;
+                        var positionEnd = (i+1) * multip;
+                        var prefix = $"{position}-{positionEnd}: ";
+
+                        for (int j = position; j < positionEnd && j < lines.Length; j++)
+                        {
+                            line += lines[j];
+                        }
+                        lock (balanceLock)
+                        {
+                            tbx_esrb.Text += prefix;
+                        }
+
+                        await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + line + "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0, stopSequences: stop)))
+                        {
+                            lock (balanceLock)
+                            {
+                                tbx_esrb.Text += $"{token.ToString()}";
+                            }
+                        }
+
+                        lock (balanceLock)
+                        {
+                            tbx_esrb.Text += Environment.NewLine;
+                        }
                     }
 
                 }
@@ -172,7 +204,7 @@ namespace Inspector_Gadget_Maui
                 }
                 else
                 {
-                   
+
                     Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
 
                     if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
@@ -218,11 +250,11 @@ namespace Inspector_Gadget_Maui
                 {
                     string line = whisper.StandardOutput.ReadLine();
                     Debug.WriteLine(line);
-                    Application.Current.Dispatcher.Dispatch(() =>                   
+                    Application.Current.Dispatcher.Dispatch(() =>
                     {
                         if (!string.IsNullOrWhiteSpace(line) && line.StartsWith("["))
                         {
-                           
+
                             tbx_input.Text += line + Environment.NewLine;
                         }
                     });
@@ -234,9 +266,9 @@ namespace Inspector_Gadget_Maui
             }
             catch (Exception ex)
             {
-                throw ;
+                throw;
             }
-            finally 
+            finally
             {
                 if (whisper != null)
                 {
@@ -246,6 +278,6 @@ namespace Inspector_Gadget_Maui
             }
         }
 
-      
+
     }
 }
