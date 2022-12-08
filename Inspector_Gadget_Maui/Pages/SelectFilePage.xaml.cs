@@ -5,8 +5,15 @@ public partial class SelectFilePage : ContentPage
 
     public SelectFilePage()
 	{
-        Application.Current.UserAppTheme = AppTheme.Light;
-		InitializeComponent();
+        try
+        {
+            Application.Current.UserAppTheme = AppTheme.Light;
+            InitializeComponent();
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
 	}
 
     private async void BtnSelectFile_Clicked(object sender, EventArgs e)
@@ -45,5 +52,10 @@ public partial class SelectFilePage : ContentPage
             await Navigation.PushAsync(new TranscriptionPage(entFilePath.Text));
         }
         catch (Exception ex) { throw ex; }
+    }
+
+    private void OnContentPageUnloaded(object sender, EventArgs e)
+    {
+        video.Handler?.DisconnectHandler();
     }
 }

@@ -6,7 +6,7 @@ using Uri = Android.Net.Uri;
 
 namespace Inspector_Gadget_Maui.Platforms.Android
 {
-    [ContentProvider(new string[] { "com.companyname.videodemos" })]
+    [ContentProvider(new string[] { "com.companyname.inspector_gadget_maui" })]
     public class VideoProvider : ContentProvider
     {
         public override AssetFileDescriptor OpenAssetFile(Uri uri, string mode)
