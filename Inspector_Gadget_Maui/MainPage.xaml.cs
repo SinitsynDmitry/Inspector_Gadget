@@ -170,7 +170,7 @@ namespace Inspector_Gadget_Maui
                 }
                 else
                 {
-                    tbx_whisper.Text = "";
+                   
                     Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
 
                     if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
