@@ -142,7 +142,8 @@ namespace Inspector_Gadget_Maui
         {
             try
             {
-                Task.Factory.StartNew(() => { StartWhisperProcess(); });
+                StartWhisperProcess();
+              //  Task.Factory.StartNew(() => { StartWhisperProcess(); });
             }
             catch(Exception ex)
             {
@@ -154,6 +155,7 @@ namespace Inspector_Gadget_Maui
         {
             try
             {
+                tbx_whisper.Text = "";
                 Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
 
                 if(!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
@@ -171,16 +173,40 @@ namespace Inspector_Gadget_Maui
                 ProcessStartInfo psInfo = new ProcessStartInfo(srCommandName);
 
                 psInfo.WindowStyle = ProcessWindowStyle.Normal;
+              //  psInfo.RedirectStandardOutput = true;
+              //  psInfo.UseShellExecute = false;
 
-                var vrProcess = Process.Start(psInfo);
-
-                vrProcess.WaitForExit();
+                var p = new Process();
+                p.StartInfo = psInfo;
+//p.OutputDataReceived += VrProcess_OutputDataReceived;              
+                p.Start();
+               
+          //      p.BeginOutputReadLine();
+                p.WaitForExit();
+                //var vrProcess = Process.Start(psInfo);
+                //vrProcess.OutputDataReceived += VrProcess_OutputDataReceived;
+                //vrProcess.WaitForExit();
             }
             catch(Exception ex)
             {
                 throw ex;
             }
 
+        }
+
+        private void VrProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            try
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    tbx_input.Text += e.Data;
+                });
+            }
+             catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
