@@ -69,9 +69,9 @@
                 <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Keywords" />
                 <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" FontAttributes="Bold" Text="ESRB" />
 
-                <Editor x:Name="tbx_output"  Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-                <Editor x:Name="tbx_keywords" Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-                <Editor x:Name="tbx_esrb"  Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor x:Name="tbx_output"  Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor x:Name="tbx_keywords" Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor x:Name="tbx_esrb"  Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
             </Grid>
         </Grid>
     </ScrollView>
