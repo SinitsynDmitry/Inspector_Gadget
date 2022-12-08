@@ -1,11 +1,15 @@
 ﻿
 using OpenAI_API;
+using System.Diagnostics;
 
 namespace Inspector_Gadget_Maui
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
+        private static string whisperLanguage = "English";
+        private static string whisperModel = whisperModels.medium_en.ToString();
+        private static long irCmdFileNameCounter = 0;
 
         public MainPage()
         {
@@ -136,12 +140,38 @@ namespace Inspector_Gadget_Maui
         {
             try
             {
-
+                Task.Factory.StartNew(() => { StartWhisperProcess(); });
             }
             catch(Exception ex)
             {
                 throw ex;
             }
+        }
+
+        private void StartWhisperProcess()
+        {
+            try
+            {
+                string srCommand = @$"cmd /K whisper ""{tbInfo.Text}"" --language {whisperLanguage} --model {whisperModel} --device cpu --task transcribe";
+                string srCommandName = $"commands/cmd_{Interlocked.Read(ref irCmdFileNameCounter)}.cmd";
+
+                Interlocked.Add(ref irCmdFileNameCounter, 1);
+
+                File.WriteAllText(srCommandName, srCommand);
+
+                ProcessStartInfo psInfo = new ProcessStartInfo(srCommandName);
+
+                psInfo.WindowStyle = ProcessWindowStyle.Normal;
+
+                var vrProcess = Process.Start(psInfo);
+
+                vrProcess.WaitForExit();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }
