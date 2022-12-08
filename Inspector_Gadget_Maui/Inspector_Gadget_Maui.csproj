@@ -53,4 +53,10 @@
 		<PackageReference Include="OpenAI" Version="1.2.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Settings.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
