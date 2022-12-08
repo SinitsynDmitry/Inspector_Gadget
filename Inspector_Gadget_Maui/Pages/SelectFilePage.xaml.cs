@@ -61,6 +61,7 @@ public partial class SelectFilePage : ContentPage
         try
         {
             video.Stop();
+            video.Source = null;
             await Navigation.PushAsync(new TranscriptionPage(entFilePath.Text));
         }
         catch (Exception ex) { throw ex; }
