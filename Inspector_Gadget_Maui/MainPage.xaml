@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Inspector_Gadget_Maui.MainPage">
     <ContentPage.Resources>
-        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+        <!--<LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FF0A172B" />
             <GradientStop Offset="1" Color="#FF264289" />
-        </LinearGradientBrush>
+        </LinearGradientBrush>-->
     </ContentPage.Resources>
     <ScrollView>
-        <Grid Margin="10" Background="{StaticResource paneBackground}" >
+        <Grid Margin="10" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -23,16 +23,19 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnSettings" Grid.Row="0" Grid.Column="1" Text="Settings" Clicked="btnSettings_Click"/>
             <Label  Grid.Row="1" Grid.Column="0" Margin="5,-3,0,0" SemanticProperties.HeadingLevel="Level1" FontAttributes="Bold" FontSize="14">Input</Label>
-            <Editor  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbx_input"></Editor>
+            <Editor  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="tbx_input"></Editor>
             <Button Grid.Row="3" HorizontalOptions="End" x:Name="btn_submit" Text="Tl;dr" Margin="0,5,10,5" Clicked="btn_submit_Click"></Button>
             <Editor Grid.Row="4" x:Name="tbx_output"  Margin="0,0,5,0"></Editor>
             <Button Grid.Row="3" Grid.Column="1" HorizontalOptions="End" x:Name="btn_keywords" Text="Extract keywords" Margin="0,5,10,5" Clicked="btn_keywords_Click"></Button>
             <Editor Grid.Row="4" Grid.Column="1" x:Name="tbx_keywords"  Margin="5,0,0,0"/>
+            <Button Grid.Row="3" Grid.Column="2" HorizontalOptions="End" x:Name="btn_esrb" Text="ESRB rating" Margin="0,5,10,5" Clicked="btn_esrb_Clicked"></Button>
+            <Editor Grid.Row="4" Grid.Column="2" x:Name="tbx_esrb"  Margin="5,0,0,0"/>
 
-            <VerticalStackLayout x:Name="gbWhisper" Grid.Column="2" Grid.Row="2">
+            <VerticalStackLayout x:Name="gbWhisper" Grid.Column="3" Grid.Row="2">
                 <Label Text="Whisper sppech-to-text"
                 SemanticProperties.HeadingLevel="Level3"
                 FontSize="14"

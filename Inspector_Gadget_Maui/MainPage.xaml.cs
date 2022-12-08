@@ -95,6 +95,32 @@ namespace Inspector_Gadget_Maui
             }
         }
 
+        private async void btn_esrb_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tbx_input.Text))
+                {
+                    tbx_esrb.Text = "";
+
+                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
+
+                    var stop = new string[1] { "\n" };
+
+                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + tbx_input.Text+ "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0,stopSequences: stop)))
+                    {
+                        tbx_esrb.Text += token.ToString();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         private async void btnBrowse_Click(object sender, EventArgs e)
         {
             try
@@ -174,7 +200,6 @@ namespace Inspector_Gadget_Maui
                 whisper.StartInfo.CreateNoWindow = true;
                 whisper.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 whisper.StartInfo.RedirectStandardOutput = true;
-                whisper.Exited += P_Exited;
 
                 whisper.Start();
 
@@ -208,13 +233,8 @@ namespace Inspector_Gadget_Maui
                 }
                 whisper = null;
             }
-
-
         }
 
-        private void P_Exited(object sender, EventArgs e)
-        {
-           // throw new NotImplementedException();
-        }
+      
     }
 }
