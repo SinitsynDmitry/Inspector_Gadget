@@ -1,6 +1,7 @@
 ﻿
 using OpenAI_API;
 using System.Diagnostics;
+using System.Security.AccessControl;
 
 namespace Inspector_Gadget_Maui
 {
@@ -52,6 +53,7 @@ namespace Inspector_Gadget_Maui
         {
             try
             {
+                
                 await Navigation.PushAsync(new SelectFilePage());
             }
             catch(Exception ex) { throw ex; }

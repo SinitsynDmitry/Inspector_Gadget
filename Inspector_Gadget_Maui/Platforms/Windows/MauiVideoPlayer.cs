@@ -82,7 +82,11 @@ namespace Inspector_Gadget_Maui.Platforms.Windows
 
         public void UpdateIsLooping()
         {
+            if(_mediaPlayerElement.MediaPlayer!= null)
+            { 
             _mediaPlayerElement.MediaPlayer.IsLoopingEnabled = _video.IsLooping;
+                 }
+                
         }
 
         public void UpdatePosition()

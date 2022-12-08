@@ -53,8 +53,8 @@
                     <Label x:Name="tbInfo" Grid.Row="1"/>
                     <Button x:Name="btnStart"  Grid.Row="2" Text="Start" Clicked="btnStart_Clicked" Margin="5,5"/>
                     <ContentView Grid.Row="3" >
-                    <!--<controls:Video x:Name="video" IsLooping="true">
-                        --><!--<controls:ResourceVideoSource>
+                    <!--<controls:Video x:Name="video" IsLooping="true">-->
+                        <!--<controls:ResourceVideoSource>
                             <controls:ResourceVideoSource.Path>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android"
@@ -67,8 +67,8 @@
                             Value="WindowsVideo.mp4" />
                                 </OnPlatform>
                             </controls:ResourceVideoSource.Path>
-                        </controls:ResourceVideoSource>--><!--
-                    </controls:Video>-->
+                        </controls:ResourceVideoSource>-->
+                    <!--</controls:Video>-->
                     </ContentView>
 
 
