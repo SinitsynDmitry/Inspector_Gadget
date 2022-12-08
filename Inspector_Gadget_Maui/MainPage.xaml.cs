@@ -28,20 +28,22 @@ namespace Inspector_Gadget_Maui
             //SemanticScreenReader.Announce(CounterBtn.Text);
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private async void btnSettings_Click(object sender, EventArgs e)
         {
-            //    try
-            //    {
-            //        Settings settings = new Settings();
-            //        settings.Owner = Window.GetWindow(this);
+            try
+            {
+                //Settings settings = new Settings();
+                //settings.Owner = Window.GetWindow(this);
 
 
-            //        if (settings.ShowDialog() == true)
-            //        {
+                //if (settings.ShowDialog() == true)
+                //{
 
-            //        }
-            //    }
-            //    catch (Exception ex) { throw ex; }
+                //}
+                await Navigation.PushAsync(new Settings());
+
+            }
+            catch (Exception ex) { throw ex; }
         }
 
         private async void btn_submit_Click(object sender, EventArgs e)

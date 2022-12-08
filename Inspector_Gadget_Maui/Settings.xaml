@@ -16,7 +16,11 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ScrollView x:Name="gbWhisperSettings" Grid.Row="0" Header="Whisper">
+        <VerticalStackLayout x:Name="gbWhisperSettings" Grid.Row="0">
+            <Label Text="Whisper"
+                SemanticProperties.HeadingLevel="Level3"
+                FontSize="14"
+                HorizontalOptions="Center" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -27,18 +31,22 @@
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="tbLanguages" Text="Languages" Grid.Row="0" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
-                <ComboBox x:Name="cmbLanguages" HorizontalAlignment="Left" Grid.Row="0" Grid.Column ="1" VerticalAlignment="Center" Width="120"/>
-                <Label x:Name="tbModels" Text="Models" Grid.Row="1" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
-                <ComboBox x:Name="cmbBoxModels" HorizontalAlignment="Left" Grid.Row="1"  Grid.Column ="1" VerticalAlignment="Center" Width="120"/>
+                <Label x:Name="tbLanguages" Text="Languages" Grid.Row="0" Grid.Column ="0" Width="120" Margin="20,0"/>
+                <Picker x:Name="cmbLanguages" HorizontalOptions="Start" Grid.Row="0" Grid.Column ="1"  Width="120"/>
+                <Label x:Name="tbModels" Text="Models" Grid.Row="1" Grid.Column ="0"  Width="120"  Margin="20,0"/>
+                <Picker x:Name="cmbBoxModels" HorizontalOptions="Start" Grid.Row="1"  Grid.Column ="1"  Width="120"/>
 
-                <Label x:Name="tbWhisperPath" Text="Whisper .exe path" Grid.Row="2" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
-                <Label x:Name="tbWhisperPathSelected" Text="" Grid.Row="2" Grid.Column ="1" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
-                <Button x:Name="btnSelectFolder" Grid.Row="2" Grid.Column ="1" Click="btnSelectFolder_Click" Width=" 20" Content=".."/>
+                <Label x:Name="tbWhisperPath" Text="Whisper .exe path" Grid.Row="2" Grid.Column ="0"  Width="120"  Margin="20,0"/>
+                <Label x:Name="tbWhisperPathSelected" Text="" Grid.Row="2" Grid.Column ="1"  Width="120"  Margin="20,0"/>
+                <Button x:Name="btnSelectFolder" Grid.Row="2" Grid.Column ="1" Clicked="btnSelectFolder_Click" Width=" 20" Text=".."/>
 
             </Grid>
-        </ScrollView>
-        <GroupBox x:Name="gbTLDRSettings" Grid.Row="1" Header="TLDR">
+        </VerticalStackLayout>
+        <VerticalStackLayout x:Name="gbTLDRSettings" Grid.Row="1">
+            <Label Text="TLDR"
+                SemanticProperties.HeadingLevel="Level3"
+                FontSize="14"
+                HorizontalOptions="Center" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -52,26 +60,26 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="tbtemperature" Text="Temperature" Grid.Row="0" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
-                <Editor x:Name="cmbTemperature" HorizontalAlignment="Left" Grid.Row="0" Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="0.7"/>
-                <Label x:Name="tbtemperatureД" Text="Value from 0 to 1" Grid.Row="0" Grid.Column ="2" VerticalAlignment="Center" Width="120" Margin="5,0"/>
+                <Label x:Name="tbtemperature" Text="Temperature" Grid.Row="0" Grid.Column ="0"  Width="120" Margin="20,0"/>
+                <Editor x:Name="cmbTemperature" HorizontalOptions="Start" Grid.Row="0" Grid.Column ="1"  Width="30"  Text="0.7"/>
+                <Label x:Name="tbtemperatureД" Text="Value from 0 to 1" Grid.Row="0" Grid.Column ="2"  Width="120" Margin="5,0"/>
 
-                <Label x:Name="tbTokens" Text="Tokens" Grid.Row="1" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
-                <Editor x:Name="cmbTokens" HorizontalAlignment="Left" Grid.Row="1"  Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="60"/>
-                <Label x:Name="tbTokensL" Text="Value from 0 to 2048" Grid.Row="1" Grid.Column ="3" VerticalAlignment="Center" Width="120"  Margin="5,0"/>
+                <Label x:Name="tbTokens" Text="Tokens" Grid.Row="1" Grid.Column ="0"  Width="120"  Margin="20,0"/>
+                <Editor x:Name="cmbTokens" HorizontalOptions="Start" Grid.Row="1"  Grid.Column ="1"  Width="30"  Text="60"/>
+                <Label x:Name="tbTokensL" Text="Value from 0 to 2048" Grid.Row="1" Grid.Column ="3"  Width="120"  Margin="5,0"/>
 
-                <Label x:Name="tbtop" Text="Top_p" Grid.Row="2" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
-                <Editor x:Name="tbTop" HorizontalAlignment="Left" Grid.Row="2" Grid.Column ="1" VerticalAlignment="Center" Width="30" Text="1.0"/>
-                <Label x:Name="tbtopL" Text="Value from 0 to 1" Grid.Row="2" Grid.Column ="3" VerticalAlignment="Center" Width="120" Margin="5,0"/>
+                <Label x:Name="tbtop" Text="Top_p" Grid.Row="2" Grid.Column ="0"  Width="120" Margin="20,0"/>
+                <Editor x:Name="tbTop" HorizontalOptions="Start" Grid.Row="2" Grid.Column ="1"  Width="30" Text="1.0"/>
+                <Label x:Name="tbtopL" Text="Value from 0 to 1" Grid.Row="2" Grid.Column ="3"  Width="120" Margin="5,0"/>
 
-                <Label x:Name="tbfrequencyPenalty" Text="Frequency penalty" Grid.Row="3" Grid.Column ="0" VerticalAlignment="Center" Width="120"  Margin="20,0"/>
-                <Editor x:Name="txfrequencyPenalty" HorizontalAlignment="Left" Grid.Row="3"  Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="0.0"/>
-                <Label x:Name="tbfrequencyPenaltyL" Text="Value from -2.0 to 2.0" Grid.Row="3" Grid.Column ="3" VerticalAlignment="Center" Width="120"  Margin="5,0"/>
+                <Label x:Name="tbfrequencyPenalty" Text="Frequency penalty" Grid.Row="3" Grid.Column ="0"  Width="120"  Margin="20,0"/>
+                <Editor x:Name="txfrequencyPenalty" HorizontalOptions="Start" Grid.Row="3"  Grid.Column ="1"  Width="30"  Text="0.0"/>
+                <Label x:Name="tbfrequencyPenaltyL" Text="Value from -2.0 to 2.0" Grid.Row="3" Grid.Column ="3"  Width="120"  Margin="5,0"/>
 
-                <Label x:Name="tblpresencePenalty" Text="Presence penalty" Grid.Row="4" Grid.Column ="0" VerticalAlignment="Center" Width="120" Margin="20,0"/>
-                <Editor x:Name="tbpresencePenalty" HorizontalAlignment="Left" Grid.Row="4" Grid.Column ="1" VerticalAlignment="Center" Width="30"  Text="1.0"/>
-                <Label x:Name="tblpresencePenaltyL" Text="Value from -2.0 to 2.0" Grid.Row="4" Grid.Column ="3" VerticalAlignment="Center" Width="120" Margin="5,0"/>
+                <Label x:Name="tblpresencePenalty" Text="Presence penalty" Grid.Row="4" Grid.Column ="0"  Width="120" Margin="20,0"/>
+                <Editor x:Name="tbpresencePenalty" HorizontalOptions="Start" Grid.Row="4" Grid.Column ="1"  Width="30"  Text="1.0"/>
+                <Label x:Name="tblpresencePenaltyL" Text="Value from -2.0 to 2.0" Grid.Row="4" Grid.Column ="3"  Width="120" Margin="5,0"/>
             </Grid>
-        </GroupBox>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>
