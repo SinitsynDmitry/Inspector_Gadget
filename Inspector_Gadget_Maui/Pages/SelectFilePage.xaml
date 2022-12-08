@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Inspector_Gadget_Maui.Controls"
              x:Class="Inspector_Gadget_Maui.SelectFilePage"
-             Title="Inspector Gadget by Indico"  Unloaded="OnContentPageUnloaded">
+             Title="Inspector Gadget by Indico"  Unloaded="OnContentPageUnloaded" BackgroundColor="Black">
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FF0A172B" />
+            <GradientStop Offset="1" Color="#FF264289" />
+        </LinearGradientBrush>
+    </ContentPage.Resources>
     <ScrollView>
-        <Grid Margin="10" ColumnSpacing="10" RowSpacing="10">
+        <Grid Margin="10" ColumnSpacing="10" RowSpacing="10"  Background="{StaticResource paneBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -35,7 +41,7 @@
             <!--<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Text="MediaPlayer here!" />-->
             <controls:Video x:Name="video"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" IsLooping="True"/>
 
-            <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
+            <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" IsEnabled="False" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
         </Grid>
     </ScrollView>
 </ContentPage>
