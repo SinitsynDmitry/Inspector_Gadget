@@ -8,7 +8,7 @@ namespace Inspector_Gadget_Maui
     {
         int count = 0;
         private static string whisperLanguage = "English";
-        private static string whisperModel = whisperModels.medium_en.ToString();
+        private static string whisperModel = whisperModels.tiny.ToString();
         private static long irCmdFileNameCounter = 0;
 
         public MainPage()
@@ -132,7 +132,7 @@ namespace Inspector_Gadget_Maui
                 var result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
-                    tbInfo.Text = result.FileName;
+                    tbInfo.Text = result.FullPath;
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -154,12 +154,19 @@ namespace Inspector_Gadget_Maui
         {
             try
             {
-                string srCommand = @$"cmd /K whisper ""{tbInfo.Text}"" --language {whisperLanguage} --model {whisperModel} --device cpu --task transcribe";
-                string srCommandName = $"commands/cmd_{Interlocked.Read(ref irCmdFileNameCounter)}.cmd";
+                Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
+
+                if(!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands"));
+                }
+
+                string srCommand = @$"cmd /K C:\Phyton399\Scripts\whisper ""{tbInfo.Text}"" --language {whisperLanguage} --model {whisperModel} --device cpu --task transcribe";
+                string srCommandName = Directory.GetCurrentDirectory() + $"/commands/cmd_{Interlocked.Read(ref irCmdFileNameCounter)}.cmd";
 
                 Interlocked.Add(ref irCmdFileNameCounter, 1);
 
-                File.WriteAllText(srCommandName, srCommand);
+                File.WriteAllText(srCommandName, srCommand); //"commands/cmd_0.cmd"
 
                 ProcessStartInfo psInfo = new ProcessStartInfo(srCommandName);
 
