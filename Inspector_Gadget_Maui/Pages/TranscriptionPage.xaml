@@ -42,7 +42,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Transcript" />
-                <Editor Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" Background="lightgray" />
+                <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" Background="lightgray" />
             </Grid>
 
             <Button Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnProcessText" Text="Process text" Clicked="BtnProcessText_Clicked" HorizontalOptions="Fill" />
