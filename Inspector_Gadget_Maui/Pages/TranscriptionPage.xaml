@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Inspector_Gadget_Maui.TranscriptionPage"
+             Title="Inspector Gadget by Indico">
+    <ScrollView>
+        <Grid Margin="10" ColumnSpacing="10" RowSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Text="MediaPlayer here!" />
+
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Transcript" />
+                <Editor Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" Background="lightgray" />
+            </Grid>
+
+            <Button Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnProcessText" Text="Process text" Clicked="BtnProcessText_Clicked" HorizontalOptions="Fill" />
+
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="12" ColumnSpacing="10" RowSpacing="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="TLDR" />
+                <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Keywords" />
+                <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" FontAttributes="Bold" Text="ESRB" />
+
+                <Editor Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>
