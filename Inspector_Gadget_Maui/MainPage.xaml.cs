@@ -131,5 +131,17 @@ namespace Inspector_Gadget_Maui
             }
             catch (Exception ex) { throw ex; }
         }
+
+        private void btnStart_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
