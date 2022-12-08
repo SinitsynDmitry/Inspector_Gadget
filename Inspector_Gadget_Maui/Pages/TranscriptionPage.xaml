@@ -42,10 +42,11 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Transcript" />
-                <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" Background="lightgray" />
+                <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" AutoSize="TextChanges" Background="lightgray" 
+                         />
             </Grid>
 
-            <Button Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnProcessText" Text="Process text" Clicked="BtnProcessText_Clicked" HorizontalOptions="Fill" />
+            <Button Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnProcessText" IsEnabled="False" Text="Process text" Clicked="BtnProcessText_Clicked" HorizontalOptions="Fill" />
 
             <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="12" ColumnSpacing="10" RowSpacing="2">
                 <Grid.ColumnDefinitions>
@@ -63,9 +64,9 @@
                 <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Keywords" />
                 <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" FontAttributes="Bold" Text="ESRB" />
 
-                <Editor Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-                <Editor Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-                <Editor Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor x:Name="tbx_output"  Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor x:Name="tbx_keywords" Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                <Editor x:Name="tbx_esrb"  Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
             </Grid>
         </Grid>
     </ScrollView>
