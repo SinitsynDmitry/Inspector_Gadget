@@ -11,6 +11,8 @@ namespace Inspector_Gadget_Maui
         private static string whisperModel = whisperModels.tiny.ToString();
         private static long irCmdFileNameCounter = 0;
 
+        private Process whisper =null;
+
         public MainPage()
         {
             InitializeComponent();
@@ -44,6 +46,15 @@ namespace Inspector_Gadget_Maui
 
             }
             catch (Exception ex) { throw ex; }
+        }
+
+        private async void btnSelectFilePage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushAsync(new SelectFilePage());
+            }
+            catch(Exception ex) { throw ex; }
         }
 
         private async void btn_submit_Click(object sender, EventArgs e)
@@ -93,21 +104,31 @@ namespace Inspector_Gadget_Maui
             }
         }
 
-        //private void btnSettings_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        Settings settings = new Settings();
-        //        settings.Owner = Window.GetWindow(this);
+        private async void btn_esrb_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tbx_input.Text))
+                {
+                    tbx_esrb.Text = "";
 
+                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
 
-        //        if (settings.ShowDialog() == true)
-        //        {
+                    var stop = new string[1] { "\n" };
 
-        //        }
-        //    }
-        //    catch (Exception ex) { throw ex; }
-        //}
+                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + tbx_input.Text+ "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0,stopSequences: stop)))
+                    {
+                        tbx_esrb.Text += token.ToString();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
 
         private async void btnBrowse_Click(object sender, EventArgs e)
         {
@@ -120,7 +141,7 @@ namespace Inspector_Gadget_Maui
                    // { DevicePlatform.Android, new[] { "application/comics" } }, // MIME type
                     { DevicePlatform.WinUI, new[] { ".mp3", ".mp4" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
-                    { DevicePlatform.macOS, new[] { "mp3", "mp4" } }, // UTType values
+                    { DevicePlatform.MacCatalyst, new[] { "mp3", "mp4" } }, // UTType values
                 });
 
                 PickOptions options = new()
@@ -138,75 +159,91 @@ namespace Inspector_Gadget_Maui
             catch (Exception ex) { throw ex; }
         }
 
-        private void btnStart_Clicked(object sender, EventArgs e)
+        private async void btnStart_Clicked(object sender, EventArgs e)
         {
             try
             {
-                StartWhisperProcess();
-              //  Task.Factory.StartNew(() => { StartWhisperProcess(); });
+
+                if (whisper != null)
+                {
+                    whisper.Kill();
+                }
+                else
+                {
+                    tbx_whisper.Text = "";
+                    Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
+
+                    if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
+                    {
+                        Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands"));
+                    }
+                    string srCommand = @$"cmd /C C:\Phyton399\Scripts\whisper ""{tbInfo.Text}"" --language {whisperLanguage} --model {whisperModel} --device cpu --task transcribe";
+                    string srCommandName = Directory.GetCurrentDirectory() + $"/commands/cmd_{Interlocked.Read(ref irCmdFileNameCounter)}.cmd";
+
+                    Interlocked.Add(ref irCmdFileNameCounter, 1);
+
+                    File.WriteAllText(srCommandName, srCommand); //"commands/cmd_0.cmd"
+
+                    await Task.Run(async () =>
+                    {
+                        StartWhisperProcess(srCommandName);
+                    });
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
         }
 
-        private void StartWhisperProcess()
+        private void StartWhisperProcess(string srCommandName)
         {
             try
             {
-               
-                Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
-
-                if(!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
-                {
-                    Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands"));
-                }
-
-                string srCommand = @$"cmd /K C:\Phyton399\Scripts\whisper ""{tbInfo.Text}"" --language {whisperLanguage} --model {whisperModel} --device cpu --task transcribe";
-                string srCommandName = Directory.GetCurrentDirectory() + $"/commands/cmd_{Interlocked.Read(ref irCmdFileNameCounter)}.cmd";
-
-                Interlocked.Add(ref irCmdFileNameCounter, 1);
-
-                File.WriteAllText(srCommandName, srCommand); //"commands/cmd_0.cmd"
-
                 ProcessStartInfo psInfo = new ProcessStartInfo(srCommandName);
 
-                psInfo.WindowStyle = ProcessWindowStyle.Normal;
-              //  psInfo.RedirectStandardOutput = true;
-              //  psInfo.UseShellExecute = false;
+                whisper = new Process();
+                whisper.StartInfo = psInfo;
+                whisper.EnableRaisingEvents = true;
+                whisper.StartInfo.UseShellExecute = false;
+                whisper.StartInfo.CreateNoWindow = true;
+                whisper.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                whisper.StartInfo.RedirectStandardOutput = true;
 
-                var p = new Process();
-                p.StartInfo = psInfo;
-//p.OutputDataReceived += VrProcess_OutputDataReceived;              
-                p.Start();
-               
-          //      p.BeginOutputReadLine();
-                p.WaitForExit();
-                //var vrProcess = Process.Start(psInfo);
-                //vrProcess.OutputDataReceived += VrProcess_OutputDataReceived;
-                //vrProcess.WaitForExit();
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+                whisper.Start();
 
-        }
-
-        private void VrProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            try
-            {
-                MainThread.BeginInvokeOnMainThread(() =>
+                while (!whisper.StandardOutput.EndOfStream)
                 {
-                    tbx_input.Text += e.Data;
-                });
+                    string line = whisper.StandardOutput.ReadLine();
+                    Debug.WriteLine(line);
+                    Application.Current.Dispatcher.Dispatch(() =>                   
+                    {
+                        if (!string.IsNullOrWhiteSpace(line) && line.StartsWith("["))
+                        {
+                           
+                            tbx_input.Text += line + Environment.NewLine;
+                        }
+                    });
+                }
+
+                // Debug.WriteLine(p.StandardOutput.ReadToEnd());
+                whisper.WaitForExit();
+
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
-                throw ex;
+                throw ;
+            }
+            finally 
+            {
+                if (whisper != null)
+                {
+                    whisper.Kill();
+                }
+                whisper = null;
             }
         }
+
+      
     }
 }
