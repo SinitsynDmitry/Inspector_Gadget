@@ -48,8 +48,28 @@ public partial class Settings : ContentPage
         }
     }
 
-    private void btnSelectFolder_Click(object sender, EventArgs e)
+    private async void btnSelectFolder_Click(object sender, EventArgs e)
     {
+        var customFileType = new FilePickerFileType(
+               new Dictionary<DevicePlatform, IEnumerable<string>>
+               {
+                   // { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
+                   // { DevicePlatform.Android, new[] { "application/comics" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".exe" } }, // file extension
+                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                    { DevicePlatform.macOS, new[] { "exe" } }, // UTType values
+               });
 
+        PickOptions options = new()
+        {
+            PickerTitle = "Please select a Whisper file",
+            FileTypes = customFileType,
+        };
+
+        var result = await FilePicker.Default.PickAsync(options);
+        if (result != null)
+        {
+            tbWhisperPathSelected.Text = result.FullPath;
+        }
     }
 }

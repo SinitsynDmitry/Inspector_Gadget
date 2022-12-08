@@ -5,10 +5,10 @@
              Title="Settings">
 
     <ContentPage.Resources>
-        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+        <!--<LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FF0A172B" />
             <GradientStop Offset="1" Color="#FF264289" />
-        </LinearGradientBrush>
+        </LinearGradientBrush>-->
     </ContentPage.Resources>
     <Grid  Background="{StaticResource paneBackground}">
         <Grid.RowDefinitions>
@@ -30,6 +30,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="tbLanguages" Text="Languages" Grid.Row="0" Grid.Column ="0" Width="120" Margin="20,0"/>
                 <Picker x:Name="cmbLanguages" HorizontalOptions="Start" Grid.Row="0" Grid.Column ="1"  Width="120"/>
@@ -37,8 +38,8 @@
                 <Picker x:Name="cmbBoxModels" HorizontalOptions="Start" Grid.Row="1"  Grid.Column ="1"  Width="120"/>
 
                 <Label x:Name="tbWhisperPath" Text="Whisper .exe path" Grid.Row="2" Grid.Column ="0"  Width="120"  Margin="20,0"/>
-                <Label x:Name="tbWhisperPathSelected" Text="" Grid.Row="2" Grid.Column ="1"  Width="120"  Margin="20,0"/>
-                <Button x:Name="btnSelectFolder" Grid.Row="2" Grid.Column ="1" Clicked="btnSelectFolder_Click" Width=" 20" Text=".."/>
+                <Entry x:Name="tbWhisperPathSelected" Text="" Grid.Row="2" Grid.Column ="1"  Margin="20,0"/>
+                <Button x:Name="btnSelectFolder" Grid.Row="2" Grid.Column ="2" Clicked="btnSelectFolder_Click" Text=".."/>
 
             </Grid>
         </VerticalStackLayout>
