@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Inspector_Gadget_Maui.SelectFilePage"
+             Title="Inspector Gadget by Indico">
+    <ScrollView>
+        <Grid Margin="10" ColumnSpacing="10" RowSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Entry Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" x:Name="entFilePath" Placeholder="Filepath" PlaceholderColor="DarkGray" Keyboard="Url" IsSpellCheckEnabled="False" Background="lightgray"/>
+            
+            <Button Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnSelectFile" Text="Select file" Clicked="BtnSelectFile_Clicked" HorizontalOptions="Fill" />
+
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Text="MediaPlayer here!" />
+
+            <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
+        </Grid>
+    </ScrollView>
+</ContentPage>
