@@ -24,9 +24,7 @@ public partial class TranscriptionPage : ContentPage
                 video.Source = new FileVideoSource
                 {
                     File = filePath
-                };
-
-                video.Pause();
+                };                
             }
 
 
