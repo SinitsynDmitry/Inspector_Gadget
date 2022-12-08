@@ -26,8 +26,7 @@ namespace Inspector_Gadget
     {
         public MainWindow()
         {
-            InitializeComponent();
-           // OpenAI_API.APIAuthentication.Default = new OpenAI_API.APIAuthentication(Environment.GetEnvironmentVariable("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"));
+            InitializeComponent();         
         }
 
         private async void btn_submit_Click(object sender, RoutedEventArgs e)
