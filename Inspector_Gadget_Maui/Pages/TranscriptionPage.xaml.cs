@@ -212,4 +212,18 @@ public partial class TranscriptionPage : ContentPage
         }
 		catch(Exception ex) { throw ex; }
     }
+
+    private void btnSearch_Clicked(object sender, EventArgs e)
+    {
+
+        try
+        {
+            
+
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
 }
