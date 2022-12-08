@@ -43,6 +43,8 @@ public partial class SelectFilePage : ContentPage
             if (result != null)
             {
                 entFilePath.Text = result.FullPath;
+
+                btnTranscribe.IsEnabled= true;
             }
 
             if (!string.IsNullOrWhiteSpace(result.FullPath))
@@ -51,6 +53,8 @@ public partial class SelectFilePage : ContentPage
                 {
                     File = result.FullPath
                 };
+
+
             }
         }
         catch (Exception ex) { throw ex; }
