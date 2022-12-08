@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Inspector_Gadget_Maui.MainPage">
-
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FF0A172B" />
+            <GradientStop Offset="1" Color="#FF264289" />
+        </LinearGradientBrush>
+    </ContentPage.Resources>
     <ScrollView>
-        <Grid Margin="10">
+        <Grid Margin="10" Background="{StaticResource paneBackground}" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -36,10 +41,12 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition  Height="auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Button x:Name="btnBrowse"  Grid.Row="0" Text="Select file" Clicked="btnBrowse_Click" Margin="5,5"/>
                     <Label x:Name="tbInfo" Grid.Row="1"/>
+                    <Button x:Name="btnStart"  Grid.Row="2" Text="Start" Clicked="btnStart_Clicked" Margin="5,5"/>
                     <Editor Grid.Row="2" x:Name="tbx_whisper"  Margin="5,0,0,0"/>
                 </Grid>
             </VerticalStackLayout>
