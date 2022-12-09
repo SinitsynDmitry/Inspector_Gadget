@@ -34,6 +34,11 @@ namespace Inspector_Gadget_Maui
         /// </summary>
         private Process whisper = null;
 
+        /// <summary>
+        /// detect first load (player fix)
+        /// </summary>
+        private bool isFirstLoad = true;
+
         #endregion /Member variables
 
         #region c_tor
@@ -44,6 +49,8 @@ namespace Inspector_Gadget_Maui
             {
                 Application.Current.UserAppTheme = AppTheme.Light;
                 InitializeComponent();
+
+               
             }
             catch (Exception ex)
             {
@@ -95,9 +102,14 @@ namespace Inspector_Gadget_Maui
                     {
                         File = result.FullPath
                     };
-                }
 
-                ContentPage_SizeChanged(null, null);
+                    if (isFirstLoad)
+                    {
+                        isFirstLoad = false;
+                        grdVideo.HeightRequest = video.Height * 3;
+                        grdVideo.MaximumHeightRequest = grdVideo.HeightRequest;
+                    }
+                }
             }
             catch (Exception ex) { throw ex; }
         }
@@ -130,21 +142,8 @@ namespace Inspector_Gadget_Maui
             video.Handler?.DisconnectHandler();
         }
 
-        /// <summary>
-        /// page size changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ContentPage_SizeChanged(object sender, EventArgs e)
-        {
-            try
-            {
-
-            }
-            catch (Exception ex) { throw ex; }
-
-        }
 
         #endregion /Methods
+
     }
 }
