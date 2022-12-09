@@ -44,7 +44,7 @@ public partial class SelectFilePage : ContentPage
             {
                 entFilePath.Text = result.FullPath;
 
-                btnTranscribe.IsEnabled= true;
+              //  btnTranscribe.IsEnabled= true;
             }
 
             if (!string.IsNullOrWhiteSpace(result.FullPath))

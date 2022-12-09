@@ -4,8 +4,14 @@
               xmlns:controls="clr-namespace:Inspector_Gadget_Maui.Controls"
              x:Class="Inspector_Gadget_Maui.TranscriptionPage"
              Title="Inspector Gadget by Indico">
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FF0A172B" />
+            <GradientStop Offset="1" Color="#FF264289" />
+        </LinearGradientBrush>
+    </ContentPage.Resources>
     <ScrollView>
-        <Grid Margin="10" ColumnSpacing="10" RowSpacing="10">
+        <Grid Margin="10" ColumnSpacing="10" RowSpacing="10" Background="{StaticResource paneBackground}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -42,7 +48,7 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Transcript" />
+                <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Transcript" TextColor="White"/>
                 <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" AutoSize="TextChanges" Background="lightgray" 
                          />
             </Grid>
@@ -65,9 +71,9 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="TLDR" />
-                <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Keywords" />
-                <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" FontAttributes="Bold" Text="ESRB" />
+                <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="TLDR" TextColor="White"/>
+                <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Keywords" TextColor="White"/>
+                <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" FontAttributes="Bold" Text="ESRB" TextColor="White"/>
 
                 <Editor x:Name="tbx_output"  Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
                 <Editor x:Name="tbx_keywords" Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />

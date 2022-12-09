@@ -21,6 +21,7 @@ public partial class TranscriptionPage : ContentPage
         try
         {
             InitializeComponent();
+
             if (!string.IsNullOrWhiteSpace(filePath))
             {
                 this.filePath = filePath.Trim();
