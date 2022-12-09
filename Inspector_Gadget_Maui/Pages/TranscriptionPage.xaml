@@ -29,15 +29,17 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
+            <!-- Player -->
             <Grid RowDefinitions="*,Auto"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12">
                 <controls:Video x:Name="video"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" IsLooping="True"/>
             </Grid>
+            
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
