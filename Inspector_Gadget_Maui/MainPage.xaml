@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Inspector_Gadget_Maui.MainPage"
              xmlns:controls="clr-namespace:Inspector_Gadget_Maui.Controls"
-             Unloaded="OnContentPageUnloaded" BackgroundColor="Black" SizeChanged="ContentPage_SizeChanged"
-             Title="Inspector Gadget by Indico">
+             Unloaded="OnContentPageUnloaded" BackgroundColor="Black" 
+             Title="Inspector Gadget by Indico"  >
       
     <ContentPage.Resources>
         <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
@@ -40,9 +40,11 @@
 
         <Button Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnSelectFile" Text="Select file" Clicked="BtnSelectFile_Clicked" HorizontalOptions="Fill" />
       
-        <Grid RowDefinitions="*,Auto"   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" >
-            <controls:Video x:Name="video"  IsLooping="True" />
-        </Grid>
+        <Grid x:Name="grdVideo" RowDefinitions="*,Auto"   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" >
+               
+            <controls:Video x:Name="video"  IsLooping="True"  />
+               
+            </Grid>
 
         <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" IsEnabled="True" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
     </Grid>
