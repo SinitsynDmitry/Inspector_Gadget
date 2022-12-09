@@ -4,178 +4,76 @@ using OpenAI_API;
 using System.Diagnostics;
 using System.Security.AccessControl;
 using Path = System.IO.Path;
+using Inspector_Gadget_Maui.Controls;
 
 namespace Inspector_Gadget_Maui
 {
     public partial class MainPage : ContentPage
     {
+        #region Member variables
+
         int count = 0;
+
+        /// <summary>
+        /// Transcription language
+        /// </summary>
         private static string whisperLanguage = "English";
+
+        /// <summary>
+        /// Transcription model
+        /// </summary>
         private static string whisperModel = whisperModels.tiny.ToString();
+
+        /// <summary>
+        /// cmd name
+        /// </summary>
         private static long irCmdFileNameCounter = 0;
 
+        /// <summary>
+        /// Whisper process (speech-to-text)
+        /// </summary>
         private Process whisper = null;
+
+        #endregion /Member variables
+
+        #region c_tor
 
         public MainPage()
         {
-            InitializeComponent();
-        }
-
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            //count++;
-
-            //if (count == 1)
-            //    CounterBtn.Text = $"Clicked {count} time";
-            //else
-            //    CounterBtn.Text = $"Clicked {count} times";
-
-            //SemanticScreenReader.Announce(CounterBtn.Text);
-        }
-
-        private async void btnSettings_Click(object sender, EventArgs e)
-        {
             try
             {
-                //Settings settings = new Settings();
-                //settings.Owner = Window.GetWindow(this);
-
-
-                //if (settings.ShowDialog() == true)
-                //{
-
-                //}
-                await Navigation.PushAsync(new Settings());
-
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        private async void btnSelectFilePage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                await Navigation.PushAsync(new SelectFilePage());
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        private async void btn_submit_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(tbx_input.Text))
-                {
-                    tbx_output.Text = "";
-
-                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
-                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(tbx_input.Text + " tl;dr:", temperature: 0.7, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 1)))
-                    {
-                        tbx_output.Text += token.ToString();
-                    }
-                }
+                Application.Current.UserAppTheme = AppTheme.Light;
+                InitializeComponent();
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
 
-        private async void btn_keywords_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(tbx_input.Text))
-                {
-                    tbx_keywords.Text = "";
+        #endregion /c_tor
 
-                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
+        #region Methods
 
-                    await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text, temperature: 0.5, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
-                    {
-                        tbx_keywords.Text += token.ToString();
-                    }
+        #region Button's event handlers
 
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        private readonly object balanceLock = new object();
-
-        private async void btn_esrb_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(tbx_input.Text))
-                {
-                    tbx_esrb.Text = "";
-
-                    var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
-                    string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-
-                    var stop = new string[1] { "\n" };
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        string line = "";
-                        var multip = lines.Length / 10;
-                        var position = i * multip;
-                        var positionEnd = (i+1) * multip;
-                        var prefix = $"{position}-{positionEnd}: ";
-
-                        for (int j = position; j < positionEnd && j < lines.Length; j++)
-                        {
-                            line += lines[j];
-                        }
-                        lock (balanceLock)
-                        {
-                            tbx_esrb.Text += prefix;
-                        }
-
-                        await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Provide an ESRB rating for the following text:\n\n" + line + "\n\nESRB rating:\"", temperature: 0.3, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 0, stopSequences: stop)))
-                        {
-                            lock (balanceLock)
-                            {
-                                tbx_esrb.Text += $"{token.ToString()}";
-                            }
-                        }
-
-                        lock (balanceLock)
-                        {
-                            tbx_esrb.Text += Environment.NewLine;
-                        }
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        private async void btnBrowse_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Select file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnSelectFile_Clicked(object sender, EventArgs e)
         {
             try
             {
                 var customFileType = new FilePickerFileType(
                 new Dictionary<DevicePlatform, IEnumerable<string>>
                 {
-                   // { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
-                   // { DevicePlatform.Android, new[] { "application/comics" } }, // MIME type
-                    { DevicePlatform.WinUI, new[] { ".mp3", ".mp4" } }, // file extension
-                    { DevicePlatform.Tizen, new[] { "*/*" } },
-                    { DevicePlatform.MacCatalyst, new[] { "public.video", "public.audio" } }, // UTType values
+                // { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
+                // { DevicePlatform.Android, new[] { "application/comics" } }, // MIME type
+                { DevicePlatform.WinUI, new[] { ".mp3", ".mp4" } }, // file extension
+                { DevicePlatform.Tizen, new[] { "*/*" } },
+                { DevicePlatform.MacCatalyst, new[] { "mp3", "mp4" } }, // UTType values
                 });
 
                 PickOptions options = new()
@@ -187,97 +85,66 @@ namespace Inspector_Gadget_Maui
                 var result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
-                    tbInfo.Text = result.FullPath;
+                    entFilePath.Text = result.FullPath;
+
                 }
+
+                if (!string.IsNullOrWhiteSpace(result.FullPath))
+                {
+                    video.Source = new FileVideoSource
+                    {
+                        File = result.FullPath
+                    };
+                }
+
+                ContentPage_SizeChanged(null, null);
             }
             catch (Exception ex) { throw ex; }
         }
 
-        private async void btnStart_Clicked(object sender, EventArgs e)
+        /// <summary>
+        /// Transcribe
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnTranscribe_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                video.Stop();
+                video.Source = null;
+                await Navigation.PushAsync(new TranscriptionPage(entFilePath.Text));
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        #endregion /Button's event handlers
+
+        /// <summary>
+        /// player unload
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnContentPageUnloaded(object sender, EventArgs e)
+        {
+            video.Handler?.DisconnectHandler();
+        }
+
+        /// <summary>
+        /// page size changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContentPage_SizeChanged(object sender, EventArgs e)
         {
             try
             {
 
-                if (whisper != null)
-                {
-                    whisper.Kill();
-                }
-                else
-                {
-
-                    Directory.SetCurrentDirectory(Path.GetDirectoryName(Environment.ProcessPath));
-
-                    if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "commands"));
-                    }
-                    string srCommand = @$"cmd /C C:\Phyton399\Scripts\whisper ""{tbInfo.Text}"" --language {whisperLanguage} --model {whisperModel} --device cpu --task transcribe";
-                    string srCommandName = Directory.GetCurrentDirectory() + $"/commands/cmd_{Interlocked.Read(ref irCmdFileNameCounter)}.cmd";
-
-                    Interlocked.Add(ref irCmdFileNameCounter, 1);
-
-                    File.WriteAllText(srCommandName, srCommand); //"commands/cmd_0.cmd"
-
-                    await Task.Run(async () =>
-                    {
-                        StartWhisperProcess(srCommandName);
-                    });
-                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            catch (Exception ex) { throw ex; }
+
         }
 
-        private void StartWhisperProcess(string srCommandName)
-        {
-            try
-            {
-                ProcessStartInfo psInfo = new ProcessStartInfo(srCommandName);
-
-                whisper = new Process();
-                whisper.StartInfo = psInfo;
-                whisper.EnableRaisingEvents = true;
-                whisper.StartInfo.UseShellExecute = false;
-                whisper.StartInfo.CreateNoWindow = true;
-                whisper.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                whisper.StartInfo.RedirectStandardOutput = true;
-
-                whisper.Start();
-
-                while (!whisper.StandardOutput.EndOfStream)
-                {
-                    string line = whisper.StandardOutput.ReadLine();
-                    Debug.WriteLine(line);
-                    Application.Current.Dispatcher.Dispatch(() =>
-                    {
-                        if (!string.IsNullOrWhiteSpace(line) && line.StartsWith("["))
-                        {
-
-                            tbx_input.Text += line + Environment.NewLine;
-                        }
-                    });
-                }
-
-                // Debug.WriteLine(p.StandardOutput.ReadToEnd());
-                whisper.WaitForExit();
-
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                if (whisper != null)
-                {
-                    whisper.Kill();
-                }
-                whisper = null;
-            }
-        }
-
-
+        #endregion /Methods
     }
 }
