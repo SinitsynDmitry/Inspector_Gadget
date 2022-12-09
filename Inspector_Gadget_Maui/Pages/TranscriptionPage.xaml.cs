@@ -1,7 +1,6 @@
-using System.Diagnostics;
-using System.Linq.Expressions;
 using Inspector_Gadget_Maui.Controls;
 using OpenAI_API;
+using System.Diagnostics;
 
 namespace Inspector_Gadget_Maui;
 
@@ -25,6 +24,8 @@ public partial class TranscriptionPage : ContentPage
             if (!string.IsNullOrWhiteSpace(filePath))
             {
                 this.filePath = filePath.Trim();
+
+                rfTranscription.IsRefreshing= true;
 
                 StartWhisper(filePath);
             }
@@ -128,6 +129,7 @@ public partial class TranscriptionPage : ContentPage
             {
                 btnProcessText.IsEnabled = true;
 
+                rfTranscription.IsRefreshing = false;
 
                 if (!string.IsNullOrWhiteSpace(filePath))
                 {
@@ -237,6 +239,19 @@ public partial class TranscriptionPage : ContentPage
         {
 
 
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    private void tbx_input_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+
+           
         }
         catch (Exception ex)
         {

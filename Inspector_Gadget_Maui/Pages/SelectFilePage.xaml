@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Inspector_Gadget_Maui.Controls"
              x:Class="Inspector_Gadget_Maui.SelectFilePage"
-             Title="Inspector Gadget by Indico"  Unloaded="OnContentPageUnloaded" BackgroundColor="Black">
+             Title="Inspector Gadget by Indico"  Unloaded="OnContentPageUnloaded" BackgroundColor="Black" SizeChanged="ContentPage_SizeChanged">
     <ContentPage.Resources>
         <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FF0A172B" />
             <GradientStop Offset="1" Color="#FF264289" />
         </LinearGradientBrush>
     </ContentPage.Resources>
-    <ScrollView>
+    <!--<ScrollView>-->
         <Grid Margin="10" ColumnSpacing="10" RowSpacing="10"  Background="{StaticResource paneBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -30,7 +30,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
@@ -39,9 +39,11 @@
             <Button Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnSelectFile" Text="Select file" Clicked="BtnSelectFile_Clicked" HorizontalOptions="Fill" />
 
             <!--<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Text="MediaPlayer here!" />-->
-            <controls:Video x:Name="video"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" IsLooping="True"/>
+            <Grid RowDefinitions="*,Auto"   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11">
+                <controls:Video x:Name="video"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" IsLooping="True"/>
+            </Grid>
 
             <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" IsEnabled="True" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
         </Grid>
-    </ScrollView>
+    <!--</ScrollView>-->
 </ContentPage>
