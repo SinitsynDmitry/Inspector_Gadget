@@ -35,9 +35,9 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-
-            <controls:Video x:Name="video"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" IsLooping="True"/>
-
+            <Grid RowDefinitions="*,Auto"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12">
+                <controls:Video x:Name="video"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" IsLooping="True"/>
+            </Grid>
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -49,8 +49,14 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Transcript" TextColor="White"/>
-                <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" AutoSize="TextChanges" Background="lightgray" 
-                         />
+                <RefreshView x:Name="rfTranscription" IsRefreshing="False"  Grid.Row="1" Grid.Column="0">
+                <ScrollView Grid.Row="1" Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            VerticalScrollBarVisibility="Default">
+                    <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" AutoSize="TextChanges" Background="lightgray" 
+                         HeightRequest="250" TextChanged="tbx_input_TextChanged"/>
+                    </ScrollView>
+                </RefreshView>
             </Grid>
 
             <Button Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnProcessText" IsEnabled="False" Text="Process text" Clicked="BtnProcessText_Clicked" HorizontalOptions="Fill" />
@@ -75,10 +81,25 @@
                 <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Keywords" TextColor="White"/>
                 <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" FontAttributes="Bold" Text="ESRB" TextColor="White"/>
 
-                <Editor x:Name="tbx_output"  Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-                <Editor x:Name="tbx_keywords" Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-                <Editor x:Name="tbx_esrb"  Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
-            </Grid>
+                <ScrollView Grid.Row="1" Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            VerticalScrollBarVisibility="Default"
+                            MaximumHeightRequest="150">
+                    <Editor x:Name="tbx_output"  Grid.Row="1" Grid.Column="0" Placeholder="TLDR..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                </ScrollView>
+                <ScrollView Grid.Row="1" Grid.Column="1"
+                            HorizontalOptions="Fill"
+                            VerticalScrollBarVisibility="Default"
+                            MaximumHeightRequest="150">
+                    <Editor x:Name="tbx_keywords" Grid.Row="1" Grid.Column="1" Placeholder="Kewords..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+                </ScrollView>
+                <ScrollView Grid.Row="1" Grid.Column="2"
+                            HorizontalOptions="Fill"
+                            VerticalScrollBarVisibility="Default"
+                            MaximumHeightRequest="150">
+                        <Editor x:Name="tbx_esrb"  Grid.Row="1" Grid.Column="2" Placeholder="ESRB..." AutoSize="TextChanges" PlaceholderColor="DarkGray" Background="lightgray" IsReadOnly="True" />
+            </ScrollView>
+                </Grid>
         </Grid>
     </ScrollView>
 </ContentPage>

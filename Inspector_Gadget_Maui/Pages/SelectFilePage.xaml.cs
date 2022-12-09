@@ -53,9 +53,9 @@ public partial class SelectFilePage : ContentPage
                 {
                     File = result.FullPath
                 };
-
-
             }
+
+            ContentPage_SizeChanged(null, null);
         }
         catch (Exception ex) { throw ex; }
     }
@@ -74,5 +74,10 @@ public partial class SelectFilePage : ContentPage
     private void OnContentPageUnloaded(object sender, EventArgs e)
     {
         video.Handler?.DisconnectHandler();
+    }
+
+    private void ContentPage_SizeChanged(object sender, EventArgs e)
+    {
+       
     }
 }
