@@ -32,7 +32,7 @@ public partial class TranscriptionPage : ContentPage
             {
                 this.filePath = filePath.Trim();
 
-                rfTranscription.IsRefreshing= true;
+              //  rfTranscription.IsRefreshing= true;
 
                 StartWhisper(filePath);
             }
@@ -140,7 +140,7 @@ public partial class TranscriptionPage : ContentPage
             {
                 btnProcessText.IsEnabled = true;
 
-                rfTranscription.IsRefreshing = false;
+              //  rfTranscription.IsRefreshing = false;
 
                 if (!string.IsNullOrWhiteSpace(filePath))
                 {
@@ -149,12 +149,12 @@ public partial class TranscriptionPage : ContentPage
                         File = filePath
                     };
 
-                    if (isFirstLoad)
-                    {
-                        isFirstLoad = false;
-                        grdVideo.HeightRequest = video.Height * 3;
-                        grdVideo.MaximumHeightRequest = grdVideo.HeightRequest;
-                    }
+                    //if (isFirstLoad)
+                    //{
+                    //    isFirstLoad = false;
+                    //    grdVideo.HeightRequest = video.Height * 3;
+                    //    grdVideo.MaximumHeightRequest = grdVideo.HeightRequest;
+                    //}
                 }
 
             });
