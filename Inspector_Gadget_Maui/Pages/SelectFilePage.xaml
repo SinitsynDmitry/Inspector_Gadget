@@ -41,7 +41,7 @@
             <!--<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Text="MediaPlayer here!" />-->
             <controls:Video x:Name="video"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" IsLooping="True"/>
 
-            <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" IsEnabled="False" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
+            <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" IsEnabled="True" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
         </Grid>
     </ScrollView>
 </ContentPage>
