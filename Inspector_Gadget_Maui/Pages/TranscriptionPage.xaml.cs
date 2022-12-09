@@ -179,6 +179,16 @@ public partial class TranscriptionPage : ContentPage
             {
                 string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
+                var max_tokens = lines.Length / 10;
+
+                if(max_tokens < 60)
+                {
+                    max_tokens = 60;
+                }
+                if (max_tokens > 4000)
+                {
+                    max_tokens = 3999;
+                }
 
                 for (int i = 0; i < lines.Length; i++)
                 {
@@ -190,7 +200,7 @@ public partial class TranscriptionPage : ContentPage
 
                 //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
 
-                await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(tbx_input.Text + " tl;dr:", temperature: 0.7, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 1)))
+                await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(tbx_input.Text + " tl;dr:", temperature: 0.7, max_tokens: max_tokens, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 1)))
                 {
                     tbx_output.Text += token.ToString();
                 }
@@ -201,11 +211,10 @@ public partial class TranscriptionPage : ContentPage
 
                 //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
 
-                await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text, temperature: 0.5, max_tokens: 60, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
+                await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text+ "\n\n", temperature: 0.5, max_tokens: max_tokens, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
                 {
                     tbx_keywords.Text += token.ToString();
                 }
-
 
                 //esbr
 
@@ -227,7 +236,7 @@ public partial class TranscriptionPage : ContentPage
 
                     var position = i * multip;
                     var positionEnd = (i + 1) * multip;
-                    if (positionEnd < lines.Length)
+                    if (positionEnd > lines.Length)
                     {
                         positionEnd = lines.Length;
                     }
