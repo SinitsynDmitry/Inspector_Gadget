@@ -2,107 +2,52 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Inspector_Gadget_Maui.MainPage"
-             xmlns:controls="clr-namespace:Inspector_Gadget_Maui.Controls">
+             xmlns:controls="clr-namespace:Inspector_Gadget_Maui.Controls"
+             Unloaded="OnContentPageUnloaded" BackgroundColor="Black" 
+             Title="Inspector Gadget by Indico"  >
+      
     <ContentPage.Resources>
-        <!--<LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
+        <LinearGradientBrush x:Key="paneBackground" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FF0A172B" />
             <GradientStop Offset="1" Color="#FF264289" />
-        </LinearGradientBrush>-->
+        </LinearGradientBrush>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid Margin="10" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <!--<RowDefinition></RowDefinition>-->
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnSelectFilePage" Grid.Row="0" Grid.Column="2" Text="Go to Select file page" Clicked="btnSelectFilePage_Click" />
-            <Button x:Name="btnSettings" Grid.Row="0" Grid.Column="1" Text="Settings" Clicked="btnSettings_Click"/>
-            <Label  Grid.Row="1" Grid.Column="0" Margin="5,-3,0,0" SemanticProperties.HeadingLevel="Level1" FontAttributes="Bold" FontSize="14">Input</Label>
-            <Editor  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="tbx_input"></Editor>
-            <Button Grid.Row="3" HorizontalOptions="End" x:Name="btn_submit" Text="Tl;dr" Margin="0,5,10,5" Clicked="btn_submit_Click"></Button>
-            <Editor Grid.Row="4" x:Name="tbx_output"  Margin="0,0,5,0"></Editor>
-            <Button Grid.Row="3" Grid.Column="1" HorizontalOptions="End" x:Name="btn_keywords" Text="Extract keywords" Margin="0,5,10,5" Clicked="btn_keywords_Click"></Button>
-            <Editor Grid.Row="4" Grid.Column="1" x:Name="tbx_keywords"  Margin="5,0,0,0"/>
-            <Button Grid.Row="3" Grid.Column="2" HorizontalOptions="End" x:Name="btn_esrb" Text="ESRB rating" Margin="0,5,10,5" Clicked="btn_esrb_Clicked"></Button>
-            <Editor Grid.Row="4" Grid.Column="2" x:Name="tbx_esrb"  Margin="5,0,0,0"/>
+    <Grid Margin="10" ColumnSpacing="10" RowSpacing="10"  Background="{StaticResource paneBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-            <VerticalStackLayout x:Name="gbWhisper" Grid.Column="3" Grid.Row="2">
-                <Label Text="Whisper sppech-to-text"
-                SemanticProperties.HeadingLevel="Level3"
-                FontSize="14"
-                HorizontalOptions="Center" />
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition  Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Button x:Name="btnBrowse"  Grid.Row="0" Text="Select file" Clicked="btnBrowse_Click" Margin="5,5"/>
-                    <Label x:Name="tbInfo" Grid.Row="1"/>
-                    <Button x:Name="btnStart"  Grid.Row="2" Text="Start" Clicked="btnStart_Clicked" Margin="5,5"/>
-                    <ContentView Grid.Row="3" >
-                    <!--<controls:Video x:Name="video" IsLooping="true">-->
-                        <!--<controls:ResourceVideoSource>
-                            <controls:ResourceVideoSource.Path>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="Android"
-                            Value="AndroidVideo.mp4" />
-                                    <On Platform="iOS"
-                            Value="AppleVideo.mp4" />
-                                    <On Platform="MacCatalyst"
-                            Value="AppleVideo.mp4" />
-                                    <On Platform="WinUI"
-                            Value="WindowsVideo.mp4" />
-                                </OnPlatform>
-                            </controls:ResourceVideoSource.Path>
-                        </controls:ResourceVideoSource>-->
-                    <!--</controls:Video>-->
-                    </ContentView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <Entry Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" x:Name="entFilePath" IsReadOnly="True" Placeholder="Filepath" PlaceholderColor="DarkGray" Keyboard="Url" IsSpellCheckEnabled="False" Background="lightgray"/>
 
+        <Button Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnSelectFile" Text="Select file" Clicked="BtnSelectFile_Clicked" HorizontalOptions="Fill" />
+      
+        <Grid x:Name="grdVideo" RowDefinitions="*,Auto"   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" >
+               
+            <controls:Video x:Name="video"  IsLooping="True"  />
+               
+            </Grid>
 
-                    <!--<Editor Grid.Row="3" x:Name="tbx_whisper"  Margin="5,0,0,0"/>-->
-                </Grid>
-            </VerticalStackLayout>
-        </Grid>
-        <!--<VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>-->
+        <Button Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" x:Name="btnTranscribe" IsEnabled="True" Text="Transcribe" Clicked="BtnTranscribe_Clicked" HorizontalOptions="Fill" />
+    </Grid>
     </ScrollView>
 
 </ContentPage>
