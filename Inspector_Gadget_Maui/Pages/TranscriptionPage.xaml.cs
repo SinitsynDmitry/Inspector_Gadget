@@ -172,7 +172,9 @@ public partial class TranscriptionPage : ContentPage
     {
         try
         {
-            var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
+            //Your secret API key from https://beta.openai.com/account/api-keys
+
+            var api = new OpenAIAPI("secret_API_key", new Engine("text-davinci-003"));
             //tldr
 
             if (!string.IsNullOrEmpty(tbx_input.Text))
@@ -198,8 +200,7 @@ public partial class TranscriptionPage : ContentPage
 
                 tbx_output.Text = "";
 
-                //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
+               
                 await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest(tbx_input.Text + " tl;dr:", temperature: 0.7, max_tokens: max_tokens, top_p: 1.0, frequencyPenalty: 0.0, presencePenalty: 1)))
                 {
                     tbx_output.Text += token.ToString();
@@ -209,7 +210,6 @@ public partial class TranscriptionPage : ContentPage
 
                 tbx_keywords.Text = "";
 
-                //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
 
                 await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(new CompletionRequest("Extract keywords from this text:\n\n" + tbx_input.Text+ "\n\n", temperature: 0.5, max_tokens: max_tokens, top_p: 1.0, frequencyPenalty: 0.8, presencePenalty: 0)))
                 {
@@ -220,8 +220,7 @@ public partial class TranscriptionPage : ContentPage
 
                 tbx_esrb.Text = "";
 
-               // string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-
+             
                 var stop = new string[1] { "\n" };
 
                 for (int i = 0; i < 10; i++)
