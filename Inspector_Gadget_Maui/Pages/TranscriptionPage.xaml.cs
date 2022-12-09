@@ -1,6 +1,8 @@
 using Inspector_Gadget_Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using OpenAI_API;
 using System.Diagnostics;
+using Path = System.IO.Path;
 
 namespace Inspector_Gadget_Maui;
 
@@ -62,6 +64,8 @@ public partial class TranscriptionPage : ContentPage
 
                 File.WriteAllText(srCommandName, srCommand); //"commands/cmd_0.cmd"
 
+                phraseObjs.Clear();
+
                 await Task.Run(async () =>
                 {
                     StartWhisperProcess(srCommandName);
@@ -71,6 +75,7 @@ public partial class TranscriptionPage : ContentPage
         catch (Exception ex) { throw ex; }
     }
 
+    public List<PhraseObj> phraseObjs { get; private set; } = new List<PhraseObj>();
 
     private void StartWhisperProcess(string srCommandName)
     {
@@ -99,6 +104,7 @@ public partial class TranscriptionPage : ContentPage
                     {
 
                         tbx_input.Text += line + Environment.NewLine;
+                       // phraseObjs.Add(new PhraseObj(line));
                     }
                 });
             }
@@ -156,12 +162,19 @@ public partial class TranscriptionPage : ContentPage
         try
         {
             var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
-
             //tldr
-
 
             if (!string.IsNullOrEmpty(tbx_input.Text))
             {
+                string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    var line = lines[i];
+                    phraseObjs.Add(new PhraseObj(line,i));
+                }
+
                 tbx_output.Text = "";
 
                 //var api = new OpenAIAPI("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", new Engine("text-davinci-003"));
@@ -171,11 +184,7 @@ public partial class TranscriptionPage : ContentPage
                     tbx_output.Text += token.ToString();
                 }
 
-
-
-
                 //keywords
-
 
                 tbx_keywords.Text = "";
 
@@ -191,7 +200,7 @@ public partial class TranscriptionPage : ContentPage
 
                 tbx_esrb.Text = "";
 
-                string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+               // string[] lines = tbx_input.Text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
                 var stop = new string[1] { "\n" };
 

@@ -19,6 +19,8 @@ namespace Inspector_Gadget_Maui
         public MainPage()
         {
             InitializeComponent();
+
+            //var test = new PhraseObj("[01:13:13.460 --> 01:13:15.460]  I don't think anybody will look at that video.");
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
