@@ -36,7 +36,7 @@
             </Grid.RowDefinitions>
 
             <!-- Player -->
-            <Grid RowDefinitions="*,Auto"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12">
+            <Grid x:Name="grdVideo" RowDefinitions="*,Auto"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12">
                 <controls:Video x:Name="video"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" IsLooping="True"/>
             </Grid>
             
@@ -56,7 +56,7 @@
                             HorizontalOptions="Fill"
                             VerticalScrollBarVisibility="Default">
                     <Editor x:Name="tbx_input" Grid.Row="1" Grid.Column="0" Placeholder="Transcript..." PlaceholderColor="DarkGray" AutoSize="TextChanges" Background="lightgray" 
-                         HeightRequest="250" TextChanged="tbx_input_TextChanged"/>
+                        HeightRequest="150" TextChanged="tbx_input_TextChanged"/>
                     </ScrollView>
                 </RefreshView>
             </Grid>

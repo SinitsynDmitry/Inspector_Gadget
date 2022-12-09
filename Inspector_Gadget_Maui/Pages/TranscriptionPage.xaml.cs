@@ -17,6 +17,11 @@ public partial class TranscriptionPage : ContentPage
 
     private string filePath = "";
 
+    /// <summary>
+    /// detect first load (player fix)
+    /// </summary>
+    private bool isFirstLoad = true;
+
     public TranscriptionPage(string filePath)
     {
         try
@@ -144,6 +149,12 @@ public partial class TranscriptionPage : ContentPage
                         File = filePath
                     };
 
+                    if (isFirstLoad)
+                    {
+                        isFirstLoad = false;
+                        grdVideo.HeightRequest = video.Height * 3;
+                        grdVideo.MaximumHeightRequest = grdVideo.HeightRequest;
+                    }
                 }
 
             });
@@ -208,8 +219,19 @@ public partial class TranscriptionPage : ContentPage
                 {
                     string line = "";
                     var multip = lines.Length / 10;
+
+                    if (multip == 0)
+                    {
+                        multip = 1;
+                    }
+
                     var position = i * multip;
                     var positionEnd = (i + 1) * multip;
+                    if (positionEnd < lines.Length)
+                    {
+                        positionEnd = lines.Length;
+                    }
+
                     var prefix = $"{position}-{positionEnd}: ";
 
                     for (int j = position; j < positionEnd && j < lines.Length; j++)
